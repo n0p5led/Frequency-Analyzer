@@ -19,11 +19,20 @@ def countBytes(encrypted):
 	return chars
 
 def sortBytesByFrequency(countedBytes):
-	for i in reversed(range(1,256)):
+	# First, we get the max byte repetition
+	max = 0
+	for i in range(256):
+		if max < countedBytes[i][1]:
+			max = countedBytes[i][1]
+
+	# For the last step, we print them, from the most repeated bytes to the less ones
+	for i in reversed(range(1,max+1)):
 		for j in reversed(range(256)):
 			if countedBytes[j][1] == i:
 				print "Char :" + str(countedBytes[j][0]) + " (" + chr(countedBytes[j][0]) + "): " + str(countedBytes[j][1]) + " times."
 
+def main():
+	encrypted = open(sys.argv[1],"r").read()
+	sortBytesByFrequency(countBytes(encrypted))
 
-encrypted = open(sys.argv[1],"r").read()
-sortBytesByFrequency(countBytes(encrypted))
+main()
